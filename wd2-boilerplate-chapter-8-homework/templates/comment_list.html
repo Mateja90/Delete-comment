@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Comment list{% endblock title%}
+
+{% block content %}
+
+  {%for comment in commentList%}
+      <p>{{comment.content}}</p>
+
+
+
+{% if user  %}
+    {% if comment.author_email == user.email() or user.admin  %}
+    <form action="/comment/{{comment.key.id()}}/delete" method="post">
+        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+        <button class="btn btn-danger">Delete comment</button>
+    </form>
+    {% endif  %}
+{% endif  %}
+
+{% endfor %}
+
+{% endblock content %}
